@@ -66,7 +66,8 @@ fun DemoScreen(modifier: Modifier = Modifier) {
                     dishes <= 2 -> 1
                     dishes <= 5 -> 2
                     dishes <= 10 -> 3
-                    else -> 4
+                    dishes <= 14 -> 4
+                    else -> 5
                 }
             },
             label = { Text("Количество блюд") },
@@ -90,7 +91,8 @@ fun DemoScreen(modifier: Modifier = Modifier) {
             RadioButtonWithLabel(1, "1–2 блюда — 3%", selectedDiscount) { selectedDiscount = it }
             RadioButtonWithLabel(2, "3–5 блюд — 5%", selectedDiscount) { selectedDiscount = it }
             RadioButtonWithLabel(3, "6–10 блюд — 7%", selectedDiscount) { selectedDiscount = it }
-            RadioButtonWithLabel(4, "более 10 блюд — 10%", selectedDiscount) { selectedDiscount = it }
+            RadioButtonWithLabel(4, "10-14 блюд — 10%", selectedDiscount) { selectedDiscount = it }
+            RadioButtonWithLabel(5, "более 14 блюд — 15%", selectedDiscount) { selectedDiscount = it }
         }
         Spacer(Modifier.height(16.dp))
 
@@ -100,7 +102,8 @@ fun DemoScreen(modifier: Modifier = Modifier) {
                 dishes <= 2 -> 1
                 dishes <= 5 -> 2
                 dishes <= 10 -> 3
-                else -> 4
+                dishes <= 14 -> 4
+                else -> 5
             }
             result = calculate(billInput, dishesInput, tipPercent.toDouble(), selectedDiscount)
         }) {
@@ -152,6 +155,7 @@ fun calculate(
         2 -> 5.0
         3 -> 7.0
         4 -> 10.0
+        5 -> 15.0
         else -> 0.0
     }
 
