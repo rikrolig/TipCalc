@@ -58,7 +58,17 @@ fun DemoScreen(modifier: Modifier = Modifier) {
 
         OutlinedTextField(
             value = dishesInput,
-            onValueChange = { dishesInput = it },
+            onValueChange = { newValue ->
+                dishesInput = newValue
+                // Автоматический выбор скидки при вводе
+                val dishes = newValue.trim().toIntOrNull() ?: 0
+                selectedDiscount = when {
+                    dishes <= 2 -> 1
+                    dishes <= 5 -> 2
+                    dishes <= 10 -> 3
+                    else -> 4
+                }
+            },
             label = { Text("Количество блюд") },
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
