@@ -132,12 +132,40 @@ fun RadioButtonWithLabel(
     }
 }
 
-// Заглушка на этом этапе
 fun calculate(
     billInput: String,
     dishesInput: String,
     tipPercent: Double,
     discountCode: Int
 ): String {
-    return "Заглушка"
+    val bill = billInput.trim().replace(',', '.').toDoubleOrNull()
+        ?: return "Ошибка: сумма счёта должна быть числом"
+
+    val dishes = dishesInput.trim().toIntOrNull()
+        ?: return "Ошибка: количество блюд должно быть целым числом"
+
+    if (bill <= 0) return "Ошибка: сумма счёта должна быть > 0"
+    if (dishes <= 0) return "Ошибка: количество блюд должно быть > 0"
+
+    val discountPercent = when (discountCode) {
+        1 -> 3.0
+        2 -> 5.0
+        3 -> 7.0
+        4 -> 10.0
+        else -> 0.0
+    }
+
+    val discountAmount = bill * discountPercent / 100.0
+    val billAfterDiscount = bill - discountAmount
+    val tipAmount = billAfterDiscount * tipPercent / 100.0
+    val total = billAfterDiscount + tipAmount
+
+    return buildString {
+        appendLine("Сумма счёта: %.2f".format(bill))
+        appendLine("Количество блюд: $dishes")
+        appendLine("Скидка: $discountPercent%% = %.2f".format(discountAmount))
+        appendLine("Чаевые: $tipPercent%% = %.2f".format(tipAmount))
+        appendLine("─".repeat(20))
+        appendLine("Итого к оплате: %.2f".format(total))
+    }
 }
